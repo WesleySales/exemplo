@@ -1,23 +1,46 @@
 package com.estudos.exemplo.entities;
 
-public class Item {
-    private Product product;
-    private int quantity;
-    private double value;
+import jakarta.persistence.*;
 
-    public Item(Product product, int quantity) {
-        this.product = product;
+import java.io.Serializable;
+
+@Entity
+public class Item implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "product_ID")
+    private Product productItem;
+
+    @ManyToOne
+    @JoinColumn(name = "order_ID")
+    private WS_Order order;
+
+    private int quantity;
+    private double price;
+
+    public Item(Long id,Product productItem, int quantity,WS_Order order) {
+        this.id=id;
+        this.productItem = productItem;
         this.quantity = quantity;
-        this.value = product.getPrice()*quantity;
+        this.price = productItem.getPrice();
+        this.order = order;
+    }
+    public Item(){}
+
+    public Long getId() {
+        return id;
     }
 
-
     public Product getProduct() {
-        return product;
+        return productItem;
     }
 
     public void setProduct(Product product) {
-        this.product = product;
+        this.productItem = product;
     }
 
     public int getQuantity() {
@@ -28,11 +51,5 @@ public class Item {
         this.quantity = quantity;
     }
 
-    public double getValue() {
-        return value;
-    }
 
-    public void setValue(double value) {
-        this.value = value;
-    }
 }

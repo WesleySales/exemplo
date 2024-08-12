@@ -1,32 +1,32 @@
 package com.estudos.exemplo.resources;
 
 import com.estudos.exemplo.entities.Category;
-import com.estudos.exemplo.repositories.CategoryRepository;
+import com.estudos.exemplo.entities.Item;
+import com.estudos.exemplo.repositories.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/categorias")
-public class CategoryResource {
+@RequestMapping(value = "/item")
+public class ItemResource {
 
     @Autowired
-    private CategoryRepository categoryRepository;
+    private ItemRepository itemRepository;
 
     @GetMapping
-    public ResponseEntity<List<Category>> findAll(){
-        List<Category> list = categoryRepository.findAll();
+    public ResponseEntity<List<Item>> findAll(){
+        List<Item> list = itemRepository.findAll();
         return ResponseEntity.ok().body(list);
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Category> findById(long id){
-        Category category = categoryRepository.findById(id).get();
-        return ResponseEntity.ok().body(category);
+    public ResponseEntity<Item> findById(long id){
+        Item item = itemRepository.findById(id).get();
+        return ResponseEntity.ok().body(item);
     }
 }
